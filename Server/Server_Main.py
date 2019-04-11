@@ -75,13 +75,6 @@ def initialize_db_tables():
                  rank_Description    TEXT,
                  FOREIGN KEY(user_Name) REFERENCES User(user_Name))
                  """)
-   # c.execute("""INSERT INTO User VALUES("KAKI",
-    #            "KAKI",
-     #           "KAKI@gmail.com",
-      #          "3",
-       #         "15",
-        #        "KAKI",
-         #       "PIPI")""")
     conn.commit()
 
 #@app.route('/create_user', methods=['GET', 'POST'])
@@ -98,11 +91,12 @@ def create_user():
     user_Age=user[4]
     user_First_Name=user[5]
     user_Last_Name=user[6]
-    c.execute("""INSERT INTO User VALUES('?','?','?','?','?','?','?')""",userName,user_Password,user_Email,user_Rank,user_Age,user_First_Name,user_Last_Name)
+    c.execute("""INSERT INTO User VALUES('{}','{}','{}','{}','{}','{}','{}')""".format(userName,user_Password,user_Email,user_Rank,user_Age,user_First_Name,user_Last_Name))
+
+
 
 #@app.route('/insert_msg_to_chat', methods=['GET', 'POST'])
 def insert_msg_to_chat():
-
     event_ID = requests.form['event_ID']
     user_Name= requests.form['user_Name']
     c.execute("""INSERT INTO Attendee Chat('?','?')""",event_ID,user_Name)
