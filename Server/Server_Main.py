@@ -79,21 +79,14 @@ def initialize_db_tables():
 
 #@app.route('/create_user', methods=['GET', 'POST'])
 def create_user():
-    #userName = requests.form['userName']
-
-    #MOCKING
-    userName="KAKI"
-    user=get_user_details(userName)
-
-    user_Password=user[1]
-    user_Email=user[2]
-    user_Rank=user[3]
-    user_Age=user[4]
-    user_First_Name=user[5]
-    user_Last_Name=user[6]
-    c.execute("""INSERT INTO User VALUES('{}','{}','{}','{}','{}','{}','{}')""".format(userName,user_Password,user_Email,user_Rank,user_Age,user_First_Name,user_Last_Name))
-
-
+    userName = requests.form['userName']
+    user_Password=requests.form['user_Password']#Delete????
+    user_Email=requests.form['user_Email']
+    user_Age=requests.form['user_Age']
+    user_First_Name=requests.form['user_First_Name']
+    user_Last_Name=requests.form['user_Last_Name']
+    c.execute("""INSERT or replace INTO User VALUES(?,?,?,?,?,?)""",(userName,user_Password,user_Email,user_Age,user_First_Name,user_Last_Name))
+    conn.commit()
 
 #@app.route('/insert_msg_to_chat', methods=['GET', 'POST'])
 def insert_msg_to_chat():
@@ -161,4 +154,3 @@ mongo = PyMongo(app)
 """
 
 initialize_db_tables()
-create_user()
