@@ -1,5 +1,7 @@
 from flask import Flask
 import sqlite3
+import requests
+
 app = Flask(__name__)
 
 conn = sqlite3.connect("HaD.db")
@@ -32,6 +34,7 @@ def initialize_db_tables():
                  rank_Point   INTEGER,
                  rank_Description    TEXT,
                  )""")
+
     c.execute("""CREATE TABLE IF NOT EXISTS Category(
             category_ID INTEGER PRIMARY KEY AUTOINCREMENT,
             category_Name TEXT)
@@ -67,17 +70,29 @@ def initialize_db_tables():
 @app.route('/create_user', methods=['GET', 'POST'])
 def create_user():
     userName = requests.form['userName']
-    c.execute("""SELECT user_Age FROM User""")
-    c.execute("""INSERT INTO Users VALUES('KAKI','1234','kaki@gmail.com','3','kaki','kaka')""")
+    user_Password=requests.form['user_Password']
+    user_Email=requests.form['user_Email']
+    user_Rank=requests.form['user_Rank']
+    user_Age=requests.form['user_Age']
+    user_First_Name=requests.form['user_First_Name']
+    user_Last_Name=requests.form['user_Last_Name']
+    c.execute("""INSERT INTO Attendee VALUES('?','?','?','?','?','?','?')""",userName,user_Password,user_Email,user_Rank,user_Age,user_First_Name,user_Last_Name)
+
+@app.route('/add_user_to_event', methods=['GET', 'POST'])
+def add_user_to_event():
+
+    event_ID = requests.form['event_ID']
+    user_Name=requests.form['user_Name']
+
+    c.execute("""INSERT INTO Attendee VALUES('?','?')""",event_ID,user_Name)
+    #ADD NEW ENTITY TO Attendee
 
 def get_age_by_user_name(user_name):
     c.execute("""SELECT user_Age FROM User WHERE user_Name =?""",(user_name))
     return c.fetchone()
 
-
 def calc_distance(location):
    return 10
-
 
 def get_events_by_user_name_and_location(user_name, location):
     age = get_age_by_user_name(user_name)
