@@ -1,14 +1,105 @@
 #profilePicture {
-    margin: auto;
+    
     border-radius: 50%;
-    align-self: center;
+    left: 100%;
   }
 
   #profile{
     margin: auto;
-    align-content: center;
+    left: 100%;
+    
   }
 
 
-
+#header1{
+  background-Color: #00BFFF;
+  height : "200px";
+  position: fixed;
+  top:21%;
+  left:14%;
+  height: 20%;
+  width: 90%;
+  z-index:-1;
+}
   
+#avatar {
+  width: 130;
+  height: 130;
+  border-Radius: 50% ;
+  border-Width: 4;
+  border-Color: "white";
+  margin-Bottom:10;
+  align-Self:'center';
+  position: 'absolute';
+  margin-Top:130;
+  margin-Left:35%;
+}
+ 
+#name{
+  font-Size:22;
+  align-self: center;
+  align-content: center;
+  color:"#FFFFFF";
+  font-weight: bold;
+  height: 25px;
+  margin-Left:29%;
+  background-color: #00BFFF;
+  border-radius: 100px;
+}
+
+#body1{
+  align-self: center;
+  align-content: center;
+  align-content: center;
+  margin-Top:40;
+  margin-Left:15%;
+  width: 40%;
+}
+
+#bodyContent{
+  align-self: center;
+  align-content: center;
+  flex: 1;
+  align-Items: 'center';
+  padding:30;
+}
+
+#info{
+  font-Size:16;
+  font-weight: bold;
+  color: "#00BFFF";
+  margin-top:10;
+  margin-Left:29%;
+  background-color:#00BFFF;
+  border-radius: 100px;
+}
+
+#description{
+  align-self: center;
+  align-content: center;
+  font-Size:16;
+  color: "#696969";
+  margin-Top:10;
+  text-Align: 'center';
+  margin-Left:29%;
+  width: 800;
+  background-color: #00BFFF;
+  border-radius: 70px;
+  font-weight: bold;
+}
+
+#buttonContainer{
+  align-self: center;
+  align-content: center;
+  margin-Top:10;
+  height:45;
+  flex-Direction: 'row';
+  justify-Content: 'center';
+  align-Items: 'center';
+  margin-Bottom:20;
+  width:250;
+  border-Radius:30;
+  margin-Left:29%;
+  background-Color:  #00BFFF;
+  border-Radius: 99% ;
+}

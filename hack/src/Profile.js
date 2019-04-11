@@ -2,6 +2,11 @@ import React, { Component } from 'react';
 import './Profile.css';
 
 
+
+
+
+
+
 class Profile extends Component {
 
     constructor(props){
@@ -23,21 +28,37 @@ class Profile extends Component {
             s+= '*';
         }
       return(
-        <div id="profile">
-            <img  id="profilePicture" alt="profile" src ={this.state.pic} />
-            <p>
-                name = {this.state.name}  {this.state.lastName}
-            </p>
-            <p>
-                age = {this.state.age}
-            </p>
-            <p>
-            {s}
-            </p>
-            <button>update details</button>
-        </div>
+        
+        <div>
+
+         <div id="header1" ></div>
+          <img id="avatar"  alt="t" src="https://bootdey.com/img/Content/avatar/avatar6.png"/>
+          <div id="body1">
+            <div id="bodyContent">
+
+            <center>
+              <p id="name"> {this.state.name}  {this.state.lastName}</p>
+              <p id="info">  {this.state.age}</p>
+              <p id="description">Lorem loves humus,come and eat humus with me</p>
+              
+              <button id="buttonContainer">
+                <p>update details</p>  
+              </button>              
+              </center>
+
+              </div>
+              </div>
+              </div>
       );
     }
   }
 
 export default Profile;
+
+
+
+
+
+ 
+
+

@@ -39,18 +39,7 @@ class LeftMenu extends Component {
     }
     render() {
       var co = this;
-      /*
-      return(
-          <div>
-        <button id="myProfile" onClick = {()=>{
-          co.goToPage(0);
-        }}>my profile</button>
-      <button id="events" onClick = {()=>{
-          co.goToPage(1);
-        }}>show events</button>
-      </div>
-      );
-      */
+      
      return(
       <div>
         <SideNav
