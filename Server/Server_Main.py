@@ -29,20 +29,14 @@ def initialize_db_tables():
                  restrictions_Description    TEXT
                  )""")
 
-    c.execute("""CREATE TABLE IF NOT EXISTS Rank (
-                 rank_ID INTEGER PRIMARY KEY AUTOINCREMENT,
-                 FOREIGN KEY(user_Name) REFERENCES artist(User),
-                 rank_Point   INTEGER,
-                 rank_Description    TEXT,
-                 )""")
     c.execute("""CREATE TABLE IF NOT EXISTS Category(
             category_ID INTEGER PRIMARY KEY AUTOINCREMENT,
             category_Name TEXT)
-        """)
+            """)
 
     c.execute("""CREATE TABLE IF NOT EXISTS Event(
             event_ID INTEGER PRIMARY KEY AUTOINCREMENT,
-            FOREIGN KEY(event_Manager) REFERENCES User(user_Name)
+            event_Manager TEXT,
             event_Name TEXT,
             event_Description TEXT,
             evet_Picture BLOB,
@@ -51,35 +45,69 @@ def initialize_db_tables():
             event_Location TEXT,
             event_Minimum_Participants INTEGER,
             event_Maximum_Participants INTEGER,
-            FOREIGN KEY(restrictions_ID) REFERENCES Restrictions(restrictions_ID)
-            FOREIGN KEY(rank_ID) REFERENCES Rank(rank_ID))
-        """)
+            restrictions_ID INTEGER,
+            rank_ID INTEGER,
+            FOREIGN KEY(restrictions_ID) REFERENCES Restrictions(restrictions_ID),
+            FOREIGN KEY(rank_ID) REFERENCES Rank(rank_ID),
+            FOREIGN KEY(event_Manager) REFERENCES User(user_Name))
+            """)
 
     c.execute("""CREATE TABLE IF NOT EXISTS Attendee(
-            FOREIGN KEY(event_ID) REFERENCES Events(Event_ID)),
+            event_ID INTEGER,
+            user_Name TEXT,
+            FOREIGN KEY(event_ID) REFERENCES Events(Event_ID),
             FOREIGN KEY(user_Name) REFERENCES User(user_Name))
-        """)
+            """)
 
     c.execute("""CREATE TABLE IF NOT EXISTS Chat(
-                FOREIGN KEY(event_ID) REFERENCES Events(Event_ID)),
-                FOREIGN KEY(user_Name) REFERENCES User(user_Name)),
                 message TEXT,
-                message_Send_Time INTEGER
+                message_Send_Time INTEGER,
+                event_ID INTEGER,
+                user_Name TEXT,
+                FOREIGN KEY(event_ID) REFERENCES Events(Event_ID),
+                FOREIGN KEY(user_Name) REFERENCES User(user_Name))
             """)
+
+    c.execute("""CREATE TABLE IF NOT EXISTS Rank (
+                 rank_ID INTEGER PRIMARY KEY AUTOINCREMENT,
+                 user_Name TEXT,
+                 rank_Point   INTEGER,
+                 rank_Description    TEXT,
+                 FOREIGN KEY(user_Name) REFERENCES User(user_Name))
+                 """)
+   # c.execute("""INSERT INTO User VALUES("KAKI",
+    #            "KAKI",
+     #           "KAKI@gmail.com",
+      #          "3",
+       #         "15",
+        #        "KAKI",
+         #       "PIPI")""")
     conn.commit()
 
-@app.route('/create_user', methods=['GET', 'POST'])
+#@app.route('/create_user', methods=['GET', 'POST'])
 def create_user():
-    userName = requests.form['userName']
-    user_Password=requests.form['user_Password']
-    user_Email=requests.form['user_Email']
-    user_Rank=requests.form['user_Rank']
-    user_Age=requests.form['user_Age']
-    user_First_Name=requests.form['user_First_Name']
-    user_Last_Name=requests.form['user_Last_Name']
-    c.execute("""INSERT INTO Attendee VALUES('?','?','?','?','?','?','?')""",userName,user_Password,user_Email,user_Rank,user_Age,user_First_Name,user_Last_Name)
+    #userName = requests.form['userName']
 
-@app.route('/add_user_to_event', methods=['GET', 'POST'])
+    #MOCKING
+    userName="KAKI"
+    user=get_user_details(userName)
+
+    user_Password=user[1]
+    user_Email=user[2]
+    user_Rank=user[3]
+    user_Age=user[4]
+    user_First_Name=user[5]
+    user_Last_Name=user[6]
+    c.execute("""INSERT INTO User VALUES('?','?','?','?','?','?','?')""",userName,user_Password,user_Email,user_Rank,user_Age,user_First_Name,user_Last_Name)
+
+#@app.route('/insert_msg_to_chat', methods=['GET', 'POST'])
+def insert_msg_to_chat():
+
+    event_ID = requests.form['event_ID']
+    user_Name= requests.form['user_Name']
+    c.execute("""INSERT INTO Attendee Chat('?','?')""",event_ID,user_Name)
+
+#@app.route('/add_user_to_event', methods=['GET', 'POST'])
 def add_user_to_event():
 
     event_ID = requests.form['event_ID']
@@ -88,10 +116,22 @@ def add_user_to_event():
     c.execute("""INSERT INTO Attendee VALUES('?','?')""",event_ID,user_Name)
     #ADD NEW ENTITY TO Attendee
 
+#@app.route('/add_user_to_event', methods=['GET', 'POST'])
+def add_user_to_event():
+    event_ID = requests.form['event_ID']
+    user_Name = requests.form['user_Name']
+    c.execute("""INSERT INTO Attendee Chat('?','?')""", event_ID, user_Name)
+    # ADD NEW ENTITY TO Attendee
+
+#USER METHODS
 def get_age_by_user_name(user_name):
     c.execute("""SELECT user_Age FROM User WHERE user_Name =?""",(user_name))
     return c.fetchone()
 
+def get_user_details(user_name):
+    c.execute("""SELECT * FROM User WHERE user_Name = '{}'""".format(user_name))
+    return c.fetchone()
+#
 
 def calc_distance(location):
    return 10
@@ -125,3 +165,6 @@ app.run(debug=True)
 app.config["MONGO_URI"] = "mongodb://localhost:27017/myDatabase"
 mongo = PyMongo(app)
 """
+
+initialize_db_tables()
+create_user()
