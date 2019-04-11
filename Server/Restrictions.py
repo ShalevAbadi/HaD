@@ -22,7 +22,7 @@ class Restrictions():
     @staticmethod
     def get_from_db(conn, restriction_id):
         cursor = conn.cursor()
-        cursor.execute("""SELECT * FROM Restrictions WHERE restrictions_ID=?""", restriction_id)
+        cursor.execute("""SELECT * FROM Restrictions WHERE restrictions_ID=?""", (restriction_id,))
         res = cursor.fetchone()
         return Restrictions(conn, res[0], res[1], res[2], res[3], res[4])
 
