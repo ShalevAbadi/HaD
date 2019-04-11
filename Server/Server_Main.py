@@ -3,13 +3,14 @@ import sqlite3
 import requests
 from Restrictions import Restrictions
 from Rank import Rank
+from Attendee import Attendee
 from Event import Event
+from User import User
 
 app = Flask(__name__)
 
 conn = sqlite3.connect("HaD.db")
 c = conn.cursor()
-
 
 def initialize_db_tables():
 
@@ -56,7 +57,7 @@ def initialize_db_tables():
     c.execute("""CREATE TABLE IF NOT EXISTS Attendee(
             event_ID INTEGER,
             user_Name TEXT,
-            FOREIGN KEY(event_ID) REFERENCES Events(Event_ID),
+            FOREIGN KEY(event_ID) REFERENCES Event(Event_ID),
             FOREIGN KEY(user_Name) REFERENCES User(user_Name))
             """)
 
@@ -86,8 +87,10 @@ def create_user():
     user_Age=requests.form['user_Age']
     user_First_Name=requests.form['user_First_Name']
     user_Last_Name=requests.form['user_Last_Name']
-    c.execute("""INSERT or replace INTO User VALUES(?,?,?,?,?,?)""",(userName,user_Password,user_Email,user_Age,user_First_Name,user_Last_Name))
-    conn.commit()
+    user=User(conn,userName,user_Password,user_Email,user_Age,user_First_Name,user_Last_Name)
+    user.save_to_db()
+    #c.execute("""INSERT or replace INTO User VALUES(?,?,?,?,?,?)""",(userName,user_Password,user_Email,user_Age,user_First_Name,user_Last_Name))
+    #conn.commit()
 
 #@app.route('/insert_msg_to_chat', methods=['GET', 'POST'])
 def insert_msg_to_chat():
@@ -100,8 +103,9 @@ def add_user_to_event():
 
     event_ID = requests.form['event_ID']
     user_Name=requests.form['user_Name']
-
-    c.execute("""INSERT INTO Attendee VALUES('?','?')""",event_ID,user_Name)
+    attendee=Attendee(conn,event_ID,user_Name)
+    attendee.save_to_db()
+    #c.execute("""INSERT INTO Attendee VALUES('?','?')""",event_ID,user_Name)
     #ADD NEW ENTITY TO Attendee
 
 #@app.route('/add_user_to_event', methods=['GET', 'POST'])
@@ -115,11 +119,14 @@ def calc_distance(location):
    return 10
 
 
-def get_events_by_user_name_and_location(user_name, location):
-    age = get_age_by_user_name(user_name)
-    print(age)
-    c.execute()
-    return
+initialize_db_tables()
+#create_user()
+#restrictions = Restrictions(conn, None, 10, 20, 'male', 'abasdbasdjasdasd')
+#event = Event(conn, None, "tom", 'pizze', 'Friday morning pizze with tom', None, '12:00', '14:00', 33.078850, 33.783135, 2, 5, restrictions)
+for i in Event.init_events_list_from_db(conn, 30, 30):
+    print(i.manager_user_name)
+    print(i.restrictions.description)
+#event.save_to_db()
 
 """@app.route('/notes_getters', methods=['GET', 'POST'])
 def notes_getters():
@@ -141,12 +148,3 @@ app.run(debug=True)
 app.config["MONGO_URI"] = "mongodb://localhost:27017/myDatabase"
 mongo = PyMongo(app)
 """
-
-initialize_db_tables()
-#create_user()
-#restrictions = Restrictions(conn, None, 10, 20, 'male', 'abasdbasdjasdasd')
-#event = Event(conn, None, "tom", 'pizze', 'Friday morning pizze with tom', None, '12:00', '14:00', 33.078850, 33.783135, 2, 5, restrictions)
-for i in Event.init_events_list_from_db(conn, 30, 30):
-    print(i.manager_user_name)
-    print(i.restrictions.description)
-#event.save_to_db()
