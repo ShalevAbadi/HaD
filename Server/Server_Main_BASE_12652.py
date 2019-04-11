@@ -1,8 +1,5 @@
 from flask import Flask
 import sqlite3
-import requests
-
-
 app = Flask(__name__)
 
 conn = sqlite3.connect("HaD.db")
@@ -22,7 +19,7 @@ def initialize_db_tables():
                 )""")
 
     c.execute("""CREATE TABLE IF NOT EXISTS Restrictions (
-                 restrictions_ID INTEGER PRIMARY KEY AUTOINCREMENT,
+                 Rest_ID INTEGER PRIMARY KEY AUTOINCREMENT,
                  restrictions_Min_Age   INTEGER,
                  restrictions_Max_Age    INTEGER,
                  restrictions_Sex TEXT,
@@ -31,7 +28,7 @@ def initialize_db_tables():
 
     c.execute("""CREATE TABLE IF NOT EXISTS Rank (
                  rank_ID INTEGER PRIMARY KEY AUTOINCREMENT,
-                 FOREIGN KEY(user_Name) REFERENCES User(User),
+                 FOREIGN KEY(user_Name) REFERENCES artist(User),
                  rank_Point   INTEGER,
                  rank_Description    TEXT,
                  )""")
@@ -48,8 +45,6 @@ def initialize_db_tables():
             evet_Picture BLOB,
             event_Start_Time INTEGER,
             event_End_Time INTEGER,
-            event_Location_Lat INTEGER,
-            event_Location_Lng INTEGER,
             event_Minimum_Participants INTEGER,
             event_Maximum_Participants INTEGER,
             FOREIGN KEY(restrictions_ID) REFERENCES Restrictions(restrictions_ID)
@@ -69,25 +64,9 @@ def initialize_db_tables():
             """)
     conn.commit()
 
-@app.route('/create_user', methods=['GET', 'POST'])
-def create_user():
-    user_name = requests.form['userName']
-    user_password=requests.form['user_Password']
-    user_email=requests.form['user_Email']
-    user_rank=requests.form['user_Rank']
-    user_age=requests.form['user_Age']
-    user_first_name=requests.form['user_First_Name']
-    user_last_name=requests.form['user_Last_Name']
-    c.execute("""INSERT INTO Attendee VALUES('?','?','?','?','?','?','?')""",user_name,user_password,user_email,user_rank,user_age,user_first_name,user_last_name)
 
-@app.route('/add_user_to_event', methods=['GET', 'POST'])
-def add_user_to_event():
-
-    event_ID = requests.form['event_ID']
-    user_Name=requests.form['user_Name']
-
-    c.execute("""INSERT INTO Attendee VALUES('?','?')""",event_ID,user_Name)
-    #ADD NEW ENTITY TO Attendee
+def create_event(event_name, user_name, description, picture, start_time, end_time, minimum_participants, maximum_participants, restrictions,
+    c.execute("""INSERT INTO Event """)
 
 def get_age_by_user_name(user_name):
     c.execute("""SELECT user_Age FROM User WHERE user_Name =?""",(user_name))
@@ -104,13 +83,7 @@ def get_events_by_user_name_and_location(user_name, location):
     c.execute()
     return
 
-"""@app.route('/notes_getters', methods=['GET', 'POST'])
-def notes_getters():
-   if requests.method == 'POST':
-      #f = request.files.getlist("file")
-      userName = requests.form['userName']
-      #return jsonify({'prediction': url_for('static', filename=f.filename)})
-"""
+
 """
 @app.route("/")
 def hello():
