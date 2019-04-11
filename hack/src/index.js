@@ -13,7 +13,7 @@ import * as serviceWorker from './serviceWorker';
     }
        // ReactDOM.render(<LeftMenu />, document.getElementById('leftMenu'));
 
-    ReactDOM.render(<Event name = "hummuos"/>, document.getElementById('root'));
+    ReactDOM.render(<LeftMenu />, document.getElementById('root'));
 }
 
 // If you want your app to work offline and load faster, you can change

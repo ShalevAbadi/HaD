@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
+import Event from "./Event";
 import "./EvCard.css";
 
 class EvCard extends Component {
@@ -15,7 +17,14 @@ class EvCard extends Component {
             
         };
     }
+    
+     handleClick = (e) => {
+      var event;
+      e.preventDefault();
+      event = <Event name = {this.props.name}/>
+      ReactDOM.render(event, document.getElementById('mainFrame'));
 
+    };
     
     render() {
       var snippet = [].slice.call(document.querySelectorAll('.hover'));
@@ -33,7 +42,7 @@ class EvCard extends Component {
 
       return (
       <div>
-      <figure class="snip1580"><img src="http://www.jbryant.eu/recipes/Humous.jpg" alt="profile-sample2"/>
+      <figure onClick={this.handleClick} class="snip1580"><img src="http://www.jbryant.eu/recipes/Humous.jpg" alt="profile-sample2"/>
         <figcaption>
           <h3>{this.props.name}</h3>
           <h5>{this.props.description}</h5>

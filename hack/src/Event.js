@@ -33,13 +33,6 @@ class Event extends Component {
               <Button variant="primary">Go somewhere</Button>
             </Card.Body>
           </Card>;
-          <Drawer
-          open={true}
-          onRequestClose={this.toggle}
-          modalElementClass={myCustomDrawerClassName}
->
-            <div>Hey Im inside a drawer!</div>
-          </Drawer>
         </div>
         
       );
