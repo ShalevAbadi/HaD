@@ -1,3 +1,6 @@
+import json
+
+
 class Rank:
 
     def __init__(self,conn,id, user_name, points, description):
@@ -14,6 +17,9 @@ class Rank:
         temp = self.cursor.fetchone()
         self.id = temp[0]
         self.conn.commit()
+
+    def to_json(self):
+        return json.dumps({"rank_id" : self.id, "user_name" : self.user_name, "points": self.points, "description" : self.description})
 
     @staticmethod
     def get_user_ranks(conn, user_name):
@@ -33,4 +39,5 @@ class Rank:
 
     @staticmethod
     def get_user_avg_rank(conn, user_name):
-        return Rank.calc_avg_rank(Rank.get_user_ranks(conn, user_name))
+        user_ranks = Rank.get_user_ranks(conn, user_name)
+        return Rank.calc_avg_rank(user_ranks) if user_ranks > 0 else 0

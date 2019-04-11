@@ -1,4 +1,7 @@
 import sqlite3
+from flask import jsonify
+import json
+import inspect
 from Restrictions import Restrictions
 
 
@@ -26,7 +29,8 @@ class Event:
                             (self.manager_user_name,self.name,  self.description,self.picture,self.start_time,self.end_time,self.location_lat,self.location_lng,self.minimum_participants, self.maximum_participants, self.restrictions.id))
         self.conn.commit()
 
-    
+    def to_json(self):
+        return json.dumps({"event_id": self.id, "event_manager_user_name": self.manager_user_name, "event_name" : self.name, "event_description" : self.description, "event_picture" : self.picture, "event_start_time" : self.start_time, "event_end_time" : self.end_time, "event_location_lat" : self.location_lat, "event_location_lng" : self.location_lng, "minimum_participants" : self.minimum_participants, "maximum_participants" : self.maximum_participants, "restrictions" : self.restrictions.id})
 
     @staticmethod
     def init_events_list_from_db(conn, lat, lng):

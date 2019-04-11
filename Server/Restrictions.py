@@ -1,4 +1,5 @@
 import sqlite3
+import json
 
 
 class Restrictions():
@@ -18,6 +19,9 @@ class Restrictions():
         temp = self.cursor.fetchone()
         self.id = temp[0]
         self.conn.commit()
+
+    def to_json(self):
+        return json.dumps({"restrictions_id" : self.id, "min_age" : self.min_age, "max_age" : self.max_age, "sex" : self.sex, "description" : self.description})
 
     @staticmethod
     def get_from_db(conn, restriction_id):
