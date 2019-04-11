@@ -69,7 +69,7 @@ class LeftMenu extends Component {
                 <i className="fa fa-fw fa-line-chart" style={{ fontSize: '1.75em' }} />
             </NavIcon>
             <NavText>
-                Charts
+            Events
             </NavText>
             
         </NavItem>
