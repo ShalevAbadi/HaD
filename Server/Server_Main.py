@@ -53,6 +53,13 @@ def initialize_db_tables():
             FOREIGN KEY(event_ID) REFERENCES Events(Event_ID)),
             FOREIGN KEY(user_Name) REFERENCES User(user_Name))
         """)
+
+    c.execute("""CREATE TABLE IF NOT EXISTS Chat(
+                FOREIGN KEY(event_ID) REFERENCES Events(Event_ID)),
+                FOREIGN KEY(user_Name) REFERENCES User(user_Name)),
+                message TEXT,
+                message_Send_Time INTEGER
+            """)
     conn.commit()
 
 
