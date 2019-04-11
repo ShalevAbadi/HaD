@@ -1,7 +1,11 @@
+import sqlite3
+
 
 class Restrictions():
 
-    def _init_(self,conn, id, min_age, max_age, sex, description):
+    def __init__(self,conn, id, min_age, max_age, sex, description):
+        self.conn = conn
+        self.cursor = self.conn.cursor()
         self.id = id
         self. min_age = min_age
         self.max_age = max_age
@@ -9,4 +13,16 @@ class Restrictions():
         self.description = description
 
     def save_to_db(self):
-        c
+        self.cursor.execute("""INSERT INTO Restrictions VALUES(null, ?,?,?,?)""", (self.min_age, self.max_age, self.sex, self.description))
+        self.cursor.execute("SELECT last_insert_rowid()")
+        temp = self.cursor.fetchone()
+        self.id = temp[0]
+        self.conn.commit()
+
+    @staticmethod
+    def get_from_db(conn, restriction_id):
+        cursor = conn.cursor()
+        cursor.execute("""SELECT * FROM Restrictions WHERE restrictions_ID=?""", restriction_id)
+        res = cursor.fetchone()
+        return Restrictions(conn, res[0], res[1], res[2], res[3], res[4])
+

@@ -1,7 +1,9 @@
 from flask import Flask
 import sqlite3
 import requests
-
+from Restrictions import Restrictions
+from Rank import Rank
+from Event import Event
 
 app = Flask(__name__)
 
@@ -15,7 +17,6 @@ def initialize_db_tables():
                 user_Name text PRIMARY KEY,
                 user_Password TEXT,
                 user_Email   TEXT,
-                user_Rank    REAL,
                 user_Age    INTEGER,
                 user_First_Name TEXT,
                 user_Last_Name    TEXT
@@ -39,16 +40,15 @@ def initialize_db_tables():
             event_Manager TEXT,
             event_Name TEXT,
             event_Description TEXT,
-            evet_Picture BLOB,
+            event_Picture BLOB,
             event_Start_Time INTEGER,
             event_End_Time INTEGER,
-            event_Location TEXT,
+            event_Location_Lat INTEGER,
+            event_Location_Lng INTEGER,
             event_Minimum_Participants INTEGER,
             event_Maximum_Participants INTEGER,
             restrictions_ID INTEGER,
-            rank_ID INTEGER,
             FOREIGN KEY(restrictions_ID) REFERENCES Restrictions(restrictions_ID),
-            FOREIGN KEY(rank_ID) REFERENCES Rank(rank_ID),
             FOREIGN KEY(event_Manager) REFERENCES User(user_Name))
             """)
 
@@ -137,7 +137,9 @@ def get_events_by_user_name_and_location(user_name, location):
     c.execute()
     return
 
-"""@app.route('/notes_getters', methods=['GET', 'POST'])
+def create_rank():
+
+    """@app.route('/notes_getters', methods=['GET', 'POST'])
 def notes_getters():
    if requests.method == 'POST':
       #f = request.files.getlist("file")
@@ -158,5 +160,9 @@ app.config["MONGO_URI"] = "mongodb://localhost:27017/myDatabase"
 mongo = PyMongo(app)
 """
 
+
 initialize_db_tables()
-create_user()
+#create_user()
+restrictions = Restrictions(conn, None, 10, 20, 'male', 'abasdbasdjasdasd')
+event = Event(conn, None, "hummus", 'tom', 'Friday morning hummus with tom', None, '12:00', '14:00', 32.078850, 34.783135, 2, 5, restrictions)
+event.save_to_db()
