@@ -10,11 +10,12 @@ def initialize_db_tables():
 
     c.execute("""CREATE TABLE IF NOT EXISTS User (
                 user_Name text PRIMARY KEY,
-                user_password TEXT,
-                user_email   TEXT,
-                user_rank    REAL,
-                user_first_Name TEXT,
-                user_last_Name    TEXT
+                user_Password TEXT,
+                user_Email   TEXT,
+                user_Rank    REAL,
+                user_Age    INTEGER,
+                user_First_Name TEXT,
+                user_Last_Name    TEXT
                 )""")
 
     c.execute("""CREATE TABLE IF NOT EXISTS Restrictions (
@@ -38,6 +39,7 @@ def initialize_db_tables():
 
     c.execute("""CREATE TABLE IF NOT EXISTS Event(
             event_ID INTEGER PRIMARY KEY AUTOINCREMENT,
+            FOREIGN KEY(event_Manager) REFERENCES User(user_Name)
             event_Name TEXT,
             event_Description TEXT,
             evet_Picture BLOB,
@@ -45,8 +47,8 @@ def initialize_db_tables():
             event_End_Time INTEGER,
             event_Minimum_Participants INTEGER,
             event_Maximum_Participants INTEGER,
-            FOREIGN KEY(restrictions_ID) REFERENCES Restrictions(restrictions_ID))
-            FOREIGN KEY(rank_ID) REFERENCES Restrictions(rank_ID))
+            FOREIGN KEY(restrictions_ID) REFERENCES Restrictions(restrictions_ID)
+            FOREIGN KEY(rank_ID) REFERENCES Rank(rank_ID))
         """)
 
     c.execute("""CREATE TABLE IF NOT EXISTS Attendee(
@@ -61,6 +63,25 @@ def initialize_db_tables():
                 message_Send_Time INTEGER
             """)
     conn.commit()
+
+
+def create_event(event_name, user_name, description, picture, start_time, end_time, minimum_participants, maximum_participants, restrictions,
+    c.execute("""INSERT INTO Event """)
+
+def get_age_by_user_name(user_name):
+    c.execute("""SELECT user_Age FROM User WHERE user_Name =?""",(user_name))
+    return c.fetchone()
+
+
+def calc_distance(location):
+   return 10
+
+
+def get_events_by_user_name_and_location(user_name, location):
+    age = get_age_by_user_name(user_name)
+    print(age)
+    c.execute()
+    return
 
 
 """
