@@ -12,3 +12,27 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+#header{
+  position: fixed;
+  height: 20%;
+  width: 100%;
+ 
+  font-style: italic;
+  left:0%;
+}
+#leftMenu{
+  position: fixed;
+  top:21%;
+  height: 80%;
+  width: 10.8%;
+  left:0%;
+  
+ 
+}
+#mainFrame{
+  position: fixed;
+  top:21%;
+  left:20%;
+  height: 80%;
+  width: 90%;
+}
