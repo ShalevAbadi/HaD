@@ -3,6 +3,7 @@ import './leftMenu.css';
 import ReactDOM from 'react-dom';
 import App from './App';
 import Profile from './Profile';
+import EventsList from './EventsList';
 
 
 import SideNav, { Toggle, Nav, NavItem, NavIcon, NavText } from '@trendmicro/react-sidenav';
@@ -30,7 +31,7 @@ class LeftMenu extends Component {
             returnValue = <Profile pic ={imgSrc}  rating={5} name="aviv" lastName="mahulya" age={25}/>;
             break;
             case 1:
-            returnValue = <App/>;
+            returnValue = <EventsList/>;
             break;
             default:
         }
@@ -58,6 +59,10 @@ class LeftMenu extends Component {
         {
           co.goToPage(0);
         }
+        else if(selected == 'Events')
+        {
+            co.goToPage(1);
+        }
     }}
 >
     <SideNav.Toggle />
@@ -70,23 +75,14 @@ class LeftMenu extends Component {
                 profile
             </NavText>
         </NavItem>
-        <NavItem eventKey="charts">
+        <NavItem eventKey="Events">
             <NavIcon>
                 <i className="fa fa-fw fa-line-chart" style={{ fontSize: '1.75em' }} />
             </NavIcon>
             <NavText>
                 Charts
             </NavText>
-            <NavItem eventKey="charts/linechart">
-                <NavText>
-                    Line Chart
-                </NavText>
-            </NavItem>
-            <NavItem eventKey="charts/barchart">
-                <NavText>
-                    Bar Chart
-                </NavText>
-            </NavItem>
+            
         </NavItem>
     </SideNav.Nav>
 </SideNav>
