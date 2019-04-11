@@ -163,6 +163,9 @@ mongo = PyMongo(app)
 
 initialize_db_tables()
 #create_user()
-restrictions = Restrictions(conn, None, 10, 20, 'male', 'abasdbasdjasdasd')
-event = Event(conn, None, "hummus", 'tom', 'Friday morning hummus with tom', None, '12:00', '14:00', 32.078850, 34.783135, 2, 5, restrictions)
-event.save_to_db()
+#restrictions = Restrictions(conn, None, 10, 20, 'male', 'abasdbasdjasdasd')
+#event = Event(conn, None, "tom", 'pizze', 'Friday morning pizze with tom', None, '12:00', '14:00', 33.078850, 33.783135, 2, 5, restrictions)
+for i in Event.init_events_list_from_db(conn, 30, 30):
+    print(i.manager_user_name)
+    print(i.restrictions.description)
+#event.save_to_db()
