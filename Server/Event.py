@@ -26,6 +26,8 @@ class Event:
                             (self.manager_user_name,self.name,  self.description,self.picture,self.start_time,self.end_time,self.location_lat,self.location_lng,self.minimum_participants, self.maximum_participants, self.restrictions.id))
         self.conn.commit()
 
+    
+
     @staticmethod
     def init_events_list_from_db(conn, lat, lng):
         cursor = conn.cursor()
