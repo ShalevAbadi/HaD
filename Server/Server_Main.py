@@ -1,5 +1,8 @@
 from flask import Flask
 import sqlite3
+import requests
+
+
 app = Flask(__name__)
 
 conn = sqlite3.connect("HaD.db")
@@ -19,7 +22,7 @@ def initialize_db_tables():
                 )""")
 
     c.execute("""CREATE TABLE IF NOT EXISTS Restrictions (
-                 Rest_ID INTEGER PRIMARY KEY AUTOINCREMENT,
+                 restrictions_ID INTEGER PRIMARY KEY AUTOINCREMENT,
                  restrictions_Min_Age   INTEGER,
                  restrictions_Max_Age    INTEGER,
                  restrictions_Sex TEXT,
@@ -45,6 +48,7 @@ def initialize_db_tables():
             evet_Picture BLOB,
             event_Start_Time INTEGER,
             event_End_Time INTEGER,
+            event_Location TEXT,
             event_Minimum_Participants INTEGER,
             event_Maximum_Participants INTEGER,
             FOREIGN KEY(restrictions_ID) REFERENCES Restrictions(restrictions_ID)
@@ -64,11 +68,13 @@ def initialize_db_tables():
             """)
     conn.commit()
 
+"""
 @app.route('/create_user', methods=['GET', 'POST'])
 def create_user():
     userName = requests.form['userName']
     c.execute("""SELECT user_Age FROM User""")
     c.execute("""INSERT INTO Users VALUES('KAKI','1234','kaki@gmail.com','3','kaki','kaka')""")
+
 
 def get_age_by_user_name(user_name):
     c.execute("""SELECT user_Age FROM User WHERE user_Name =?""",(user_name))
@@ -84,7 +90,7 @@ def get_events_by_user_name_and_location(user_name, location):
     print(age)
     c.execute()
     return
-
+"""
 """@app.route('/notes_getters', methods=['GET', 'POST'])
 def notes_getters():
    if requests.method == 'POST':
