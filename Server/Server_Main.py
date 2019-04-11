@@ -1,7 +1,5 @@
 from flask import Flask
 import sqlite3
-import requests
-
 app = Flask(__name__)
 
 conn = sqlite3.connect("HaD.db")
@@ -70,6 +68,20 @@ def create_user():
     c.execute("""SELECT user_Age FROM User""")
     c.execute("""INSERT INTO Users VALUES('KAKI','1234','kaki@gmail.com','3','kaki','kaka')""")
 
+def get_age_by_user_name(user_name):
+    c.execute("""SELECT user_Age FROM User WHERE user_Name =?""",(user_name))
+    return c.fetchone()
+
+
+def calc_distance(location):
+   return 10
+
+
+def get_events_by_user_name_and_location(user_name, location):
+    age = get_age_by_user_name(user_name)
+    print(age)
+    c.execute()
+    return
 
 """@app.route('/notes_getters', methods=['GET', 'POST'])
 def notes_getters():
