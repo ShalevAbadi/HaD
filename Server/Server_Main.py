@@ -110,16 +110,6 @@ def add_user_to_event():
     c.execute("""INSERT INTO Attendee Chat('?','?')""", event_ID, user_Name)
     # ADD NEW ENTITY TO Attendee
 
-#USER METHODS
-def get_age_by_user_name(user_name):
-    c.execute("""SELECT user_Age FROM User WHERE user_Name =?""",(user_name))
-    return c.fetchone()
-
-def get_user_details(user_name):
-    c.execute("""SELECT * FROM User WHERE user_Name = '{}'""".format(user_name))
-    return c.fetchone()
-#
-
 def calc_distance(location):
    return 10
 
