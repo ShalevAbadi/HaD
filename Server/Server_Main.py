@@ -5,12 +5,38 @@ app = Flask(__name__)
 conn = sqlite3.connect("HaD.db")
 c = conn.cursor()
 
-c.execute("""CREATE TABLE IF NOT EXISTS Category(
+
+def initialize_db_tables():
+
+    c.execute("""CREATE TABLE IF NOT EXISTS User (
+                user_Name text PRIMARY KEY,
+                user_password TEXT,
+                user_email   TEXT,
+                user_rank    REAL,
+                user_first_Name TEXT,
+                user_last_Name    TEXT
+                )""")
+
+    c.execute("""CREATE TABLE IF NOT EXISTS Restrictions (
+                 Rest_ID INTEGER PRIMARY KEY AUTOINCREMENT,
+                 restrictions_Min_Age   INTEGER,
+                 restrictions_Max_Age    INTEGER,
+                 restrictions_Sex TEXT,
+                 restrictions_Description    TEXT
+                 )""")
+
+    c.execute("""CREATE TABLE IF NOT EXISTS Rank (
+                 rank_ID INTEGER PRIMARY KEY AUTOINCREMENT,
+                 FOREIGN KEY(user_Name) REFERENCES artist(User),
+                 rank_Point   INTEGER,
+                 rank_Description    TEXT,
+                 )""")
+    c.execute("""CREATE TABLE IF NOT EXISTS Category(
             category_ID INTEGER PRIMARY KEY AUTOINCREMENT,
             category_Name TEXT)
         """)
 
-c.execute("""CREATE TABLE IF NOT EXISTS Event(
+    c.execute("""CREATE TABLE IF NOT EXISTS Event(
             event_ID INTEGER PRIMARY KEY AUTOINCREMENT,
             event_Name TEXT,
             event_Description TEXT,
@@ -22,8 +48,12 @@ c.execute("""CREATE TABLE IF NOT EXISTS Event(
             FOREIGN KEY(restrictions_ID) REFERENCES Restrictions(restrictions_ID))
             FOREIGN KEY(rank_ID) REFERENCES Restrictions(rank_ID))
         """)
-c.execute("""INSERT INTO Category(category_Name) VALUES ('Running')""")
-conn.commit()
+
+    c.execute("""CREATE TABLE IF NOT EXISTS Attendee(
+            FOREIGN KEY(event_ID) REFERENCES Events(Event_ID)),
+            FOREIGN KEY(user_Name) REFERENCES User(user_Name))
+        """)
+    conn.commit()
 
 
 """
