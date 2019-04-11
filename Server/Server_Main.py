@@ -65,9 +65,6 @@ def initialize_db_tables():
     conn.commit()
 
 
-def create_event(event_name, user_name, description, picture, start_time, end_time, minimum_participants, maximum_participants, restrictions,
-    c.execute("""INSERT INTO Event """)
-
 def get_age_by_user_name(user_name):
     c.execute("""SELECT user_Age FROM User WHERE user_Name =?""",(user_name))
     return c.fetchone()
