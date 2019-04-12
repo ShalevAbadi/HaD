@@ -31,7 +31,7 @@ export default class Facebook extends Component {
         if (this.state.isLoggedIn) {
             fbContent = (
                 <div style={{
-                    width: '250px',
+                    width: '400px',
                     margin: 'auto',
                     background: '#f4f4f4',
                     padding: '20px'
