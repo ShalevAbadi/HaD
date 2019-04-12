@@ -11,7 +11,7 @@ from User import User
 
 app = Flask(__name__)
 
-conn: Connection = sqlite3.connect("HaD.db")
+conn= sqlite3.connect("HaD.db")
 c = conn.cursor()
 
 def initialize_db_tables():
@@ -78,7 +78,6 @@ def initialize_db_tables():
                  rank_Description    TEXT,
                  FOREIGN KEY(user_Name) REFERENCES User(user_Name))
                  """)
-   # c.execute("""INSERT INTO User VALUES ('tom','1234','tom@g.com',3,'t','n'""")
     conn.commit()
 
 #@app.route('/create_user', methods=['GET', 'POST'])
@@ -137,7 +136,7 @@ for i in Event.init_events_list_from_db(conn, 30, 30):
     print(i.restrictions.description)
 #event.save_to_db()
 
-"""@app.route('/notes_getters', methods=['GET', 'POST'])
+    """@app.route('/notes_getters', methods=['GET', 'POST'])
 def notes_getters():
    if requests.method == 'POST':
       #f = request.files.getlist("file")
@@ -157,3 +156,15 @@ app.run(debug=True)
 app.config["MONGO_URI"] = "mongodb://localhost:27017/myDatabase"
 mongo = PyMongo(app)
 """
+
+
+initialize_db_tables()
+#create_user()
+#restrictions = Restrictions(conn, None, 10, 20, 'male', 'abasdbasdjasdasd')
+#event = Event(conn, None, "tom", 'pizze', 'Friday morning pizze with tom', None, '12:00', '14:00', 33.078850, 33.783135, 2, 5, restrictions)
+for i in Event.init_events_list_from_db(conn, 30, 30):
+    print(i.to_json())
+    print(i.restrictions.to_json())
+ #   print(i.manager_user_name)
+  #  print(i.restrictions.description)
+#event.save_to_db()
