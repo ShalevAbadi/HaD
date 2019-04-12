@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import FacebookLogin from 'react-facebook-login'
-
+import './Facebook.css';
 export default class Facebook extends Component {
     state = {
         isLoggedIn: false,
@@ -34,10 +34,10 @@ export default class Facebook extends Component {
                     width: '400px',
                     margin: 'auto',
                     background: '#f4f4f4',
-                    padding: '20px'
+                    padding: '20px',
                 }}>
 
-                    <img src={this.state.picture} alt={this.state.name} />
+                    <img id='avatar' src={this.state.picture} alt={this.state.name}/>
                     <h2>Welcome {this.state.name}</h2>
                     Email: {this.state.email}
                 </div>

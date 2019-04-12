@@ -1,0 +1,12 @@
+#avatar {
+  width: 130;
+  height: 130;
+  border-Radius: 80% ;
+  border-Width: 4;
+  border-Color: "white";
+  margin-Bottom:10;
+  align-Self:'center';
+  position: 'absolute';
+  margin-Top:130;
+  margin-Left:35%;
+}
