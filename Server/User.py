@@ -1,7 +1,9 @@
 import sqlite3
+import json
+
 
 class User:
-    def _init_(self,conn, user_Name, user_Password, user_Email, user_Age, user_First_Name, user_Last_Name):
+    def __init__(self,conn, user_Name, user_Password, user_Email, user_Age, user_First_Name, user_Last_Name):
         self.conn = conn
         self.cursor = self.conn.cursor()
         self.user_Name = user_Name
@@ -10,6 +12,9 @@ class User:
         self.user_Age = user_Age
         self.user_First_Name = user_First_Name
         self.user_Last_Name = user_Last_Name
+
+    def to_json(self):
+        return(json.dumps({'user_Name':self.user_Name,'user_Password':self.user_Password,'user_Email':self.user_Email,'user_Age':self.user_Age,'user_First_Name':self.user_First_Name,'user_Last_Name':self.user_Last_Name}))
 
     def save_to_db(self):
         self.cursor.execute("""INSERT INTO User VALUES('?','?','?','?','?','?')""",(

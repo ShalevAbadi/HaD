@@ -1,3 +1,5 @@
+from sqlite3.dbapi2 import Connection
+
 from flask import Flask
 import sqlite3
 import requests
@@ -9,7 +11,7 @@ from User import User
 
 app = Flask(__name__)
 
-conn = sqlite3.connect("HaD.db")
+conn: Connection = sqlite3.connect("HaD.db")
 c = conn.cursor()
 
 def initialize_db_tables():
@@ -18,7 +20,6 @@ def initialize_db_tables():
                 user_Name text PRIMARY KEY,
                 user_Password TEXT,
                 user_Email   TEXT,
-                user_Rank    REAL,
                 user_Age    INTEGER,
                 user_First_Name TEXT,
                 user_Last_Name    TEXT
@@ -77,6 +78,7 @@ def initialize_db_tables():
                  rank_Description    TEXT,
                  FOREIGN KEY(user_Name) REFERENCES User(user_Name))
                  """)
+   # c.execute("""INSERT INTO User VALUES ('tom','1234','tom@g.com',3,'t','n'""")
     conn.commit()
 
 #@app.route('/create_user', methods=['GET', 'POST'])
@@ -118,7 +120,14 @@ def add_user_to_event():
 def calc_distance(location):
    return 10
 
+#@app.route('/get_user_data', methods=['GET', 'POST'])
+def get_user_data():
+    #userName = requests.form['userName']
+    userDetails=User.get_user_details(conn, "asd")
+    user=User(conn,userDetails[0],userDetails[1],userDetails[2],userDetails[3],userDetails[4],userDetails[5])
+    return(user.to_json())
 
+get_user_data()
 initialize_db_tables()
 #create_user()
 #restrictions = Restrictions(conn, None, 10, 20, 'male', 'abasdbasdjasdasd')
