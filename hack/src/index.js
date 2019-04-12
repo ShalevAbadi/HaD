@@ -15,7 +15,7 @@ import Facebook from './components/Facebook';
     }
        // ReactDOM.render(<LeftMenu />, document.getElementById('leftMenu'));
     ReactDOM.render(<Facebook />, document.getElementById('header'));
-    //ReactDOM.render(<LeftMenu />, document.getElementById('root'));
+    ReactDOM.render(<LeftMenu />, document.getElementById('root'));
 }
 
 // If you want your app to work offline and load faster, you can change
